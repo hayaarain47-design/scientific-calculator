@@ -1,4 +1,3 @@
-```javascript
 let expression = "";
 let isDegree = true;
 
@@ -7,7 +6,7 @@ const resultDisplay = document.getElementById("result");
 const historyDisplay = document.getElementById("history");
 
 function updateDisplay() {
-    expressionDisplay.textContent = expression || "";
+    expressionDisplay.textContent = expression;
 }
 
 function insertValue(value) {
@@ -27,20 +26,18 @@ function deleteLast() {
 }
 
 function calculate() {
-    if (!expression) return;
+    if (expression === "") return;
 
     try {
-        let formattedExpression = expression
+        let exp = expression
             .replace(/π/g, "Math.PI")
             .replace(/×/g, "*")
             .replace(/÷/g, "/");
 
-        let answer = Function(
-            '"use strict"; return (' + formattedExpression + ')'
-        )();
+        let answer = eval(exp);
 
         if (!Number.isFinite(answer)) {
-            throw new Error("Invalid calculation");
+            throw new Error();
         }
 
         answer = Number(answer.toFixed(10));
@@ -48,13 +45,14 @@ function calculate() {
         resultDisplay.textContent = answer;
         addHistory(expression, answer);
 
-    } catch (error) {
+        expression = String(answer);
+
+    } catch {
         resultDisplay.textContent = "Error";
     }
 }
 
 function calculateFunction(type) {
-    let value;
 
     if (type === "power") {
         expression += "**";
@@ -62,16 +60,16 @@ function calculateFunction(type) {
         return;
     }
 
-    if (!expression) return;
+    if (expression === "") return;
 
     try {
-        value = Function(
-            '"use strict"; return (' + expression + ')'
-        )();
 
-        if (!Number.isFinite(value)) {
-            throw new Error("Invalid number");
-        }
+        let value = eval(
+            expression
+                .replace(/π/g, "Math.PI")
+                .replace(/×/g, "*")
+                .replace(/÷/g, "/")
+        );
 
         let answer;
 
@@ -102,7 +100,7 @@ function calculateFunction(type) {
                 break;
 
             case "square":
-                answer = value ** 2;
+                answer = value * value;
                 break;
 
             case "factorial":
@@ -122,7 +120,7 @@ function calculateFunction(type) {
         }
 
         if (!Number.isFinite(answer)) {
-            throw new Error("Invalid result");
+            throw new Error();
         }
 
         answer = Number(answer.toFixed(10));
@@ -134,18 +132,15 @@ function calculateFunction(type) {
 
         expression = String(answer);
 
-    } catch (error) {
+    } catch {
         resultDisplay.textContent = "Error";
     }
 }
 
 function factorial(number) {
-    if (number < 0 || !Number.isInteger(number)) {
-        throw new Error("Invalid factorial");
-    }
 
-    if (number > 170) {
-        throw new Error("Number too large");
+    if (number < 0 || !Number.isInteger(number)) {
+        throw new Error();
     }
 
     let result = 1;
@@ -157,24 +152,25 @@ function factorial(number) {
     return result;
 }
 
-function toRadians(degrees) {
+function toRadians(value) {
+
     if (isDegree) {
-        return degrees * Math.PI / 180;
+        return value * Math.PI / 180;
     }
 
-    return degrees;
+    return value;
 }
 
 function addHistory(exp, answer) {
 
-    const emptyMessage =
-        document.querySelector(".empty-history");
+    const empty = document.querySelector(".empty-history");
 
-    if (emptyMessage) {
-        emptyMessage.remove();
+    if (empty) {
+        empty.remove();
     }
 
     const item = document.createElement("div");
+
     item.className = "history-item";
 
     item.innerHTML = `
@@ -186,33 +182,42 @@ function addHistory(exp, answer) {
 }
 
 function clearHistory() {
+
     historyDisplay.innerHTML =
         '<p class="empty-history">No calculations yet</p>';
 }
 
+
 /* DEG / RAD */
 
-document.getElementById("degreeBtn").addEventListener("click", function () {
+document.getElementById("degreeBtn").onclick = function () {
 
     isDegree = true;
 
     this.classList.add("active");
-    document.getElementById("radianBtn").classList.remove("active");
-});
 
-document.getElementById("radianBtn").addEventListener("click", function () {
+    document
+        .getElementById("radianBtn")
+        .classList.remove("active");
+};
+
+document.getElementById("radianBtn").onclick = function () {
 
     isDegree = false;
 
     this.classList.add("active");
-    document.getElementById("degreeBtn").classList.remove("active");
-});
 
-/* Keyboard Support */
+    document
+        .getElementById("degreeBtn")
+        .classList.remove("active");
+};
+
+
+/* Keyboard */
 
 document.addEventListener("keydown", function (event) {
 
-    const key = event.key;
+    let key = event.key;
 
     if (
         (key >= "0" && key <= "9") ||
@@ -239,4 +244,3 @@ document.addEventListener("keydown", function (event) {
         clearCalculator();
     }
 });
-```
