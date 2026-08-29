@@ -1,0 +1,99 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scientific Calculator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="calculator">
+
+        <div class="header">
+            <h1>Scientific Calculator</h1>
+            <p>Smart • Simple • Scientific</p>
+        </div>
+
+        <div class="display">
+            <div id="expression"></div>
+            <div id="result">0</div>
+        </div>
+
+        <div class="mode">
+            <button id="degreeBtn" class="active">DEG</button>
+            <button id="radianBtn">RAD</button>
+        </div>
+
+        <div class="buttons">
+
+            <!-- Scientific Functions -->
+            <button class="scientific" onclick="calculateFunction('sin')">sin</button>
+            <button class="scientific" onclick="calculateFunction('cos')">cos</button>
+            <button class="scientific" onclick="calculateFunction('tan')">tan</button>
+            <button class="scientific" onclick="calculateFunction('log')">log</button>
+            <button class="scientific" onclick="calculateFunction('ln')">ln</button>
+
+            <button class="scientific" onclick="calculateFunction('sqrt')">√</button>
+            <button class="scientific" onclick="calculateFunction('square')">x²</button>
+            <button class="scientific" onclick="calculateFunction('power')">xʸ</button>
+            <button class="scientific" onclick="calculateFunction('factorial')">n!</button>
+            <button class="scientific" onclick="insertValue('Math.PI')">π</button>
+
+            <!-- Clear -->
+            <button class="clear" onclick="clearCalculator()">AC</button>
+            <button class="delete" onclick="deleteLast()">DEL</button>
+            <button onclick="insertValue('(')">(</button>
+            <button onclick="insertValue(')')">)</button>
+            <button class="operator" onclick="insertValue('/')">÷</button>
+
+            <!-- Row -->
+            <button onclick="insertValue('7')">7</button>
+            <button onclick="insertValue('8')">8</button>
+            <button onclick="insertValue('9')">9</button>
+            <button class="operator" onclick="insertValue('*')">×</button>
+            <button class="scientific" onclick="insertValue('Math.E')">e</button>
+
+            <!-- Row -->
+            <button onclick="insertValue('4')">4</button>
+            <button onclick="insertValue('5')">5</button>
+            <button onclick="insertValue('6')">6</button>
+            <button class="operator" onclick="insertValue('-')">−</button>
+            <button class="scientific" onclick="calculateFunction('percent')">%</button>
+
+            <!-- Row -->
+            <button onclick="insertValue('1')">1</button>
+            <button onclick="insertValue('2')">2</button>
+            <button onclick="insertValue('3')">3</button>
+            <button class="operator" onclick="insertValue('+')">+</button>
+            <button class="scientific" onclick="calculateFunction('reciprocal')">1/x</button>
+
+            <!-- Bottom -->
+            <button onclick="insertValue('0')" class="zero">0</button>
+            <button onclick="insertValue('.')">.</button>
+            <button class="equals" onclick="calculate()">=</button>
+
+        </div>
+
+        <div class="history-section">
+            <div class="history-title">
+                <h2>History</h2>
+                <button onclick="clearHistory()">Clear</button>
+            </div>
+
+            <div id="history">
+                <p class="empty-history">No calculations yet</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+```
